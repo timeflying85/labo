@@ -1,10 +1,11 @@
 package be.technifutur.sudoku.sudoSamourail;
 
+import be.technifutur.sudoku.AbstractVue;
 import be.technifutur.sudoku.SudokuModel;
 import be.technifutur.sudoku.SudokuPositionException;
 import be.technifutur.sudoku.SudokuVue;
 
-public class VueSamourail implements SudokuVue {
+public class VueSamourail extends AbstractVue {
     private static String format = """
             +-------+-------+-------+       +-------+-------+-------+
             | . . . | . . . | . . . |       | . . . | . . . | . . . |
@@ -38,51 +39,12 @@ public class VueSamourail implements SudokuVue {
             """.replaceAll("\\.", "%s");
 
     public VueSamourail(SudokuModelSamourail model) {
-        this.model = model;
+        super(format,model);
     }
 
-    SudokuModelSamourail model;
 
     public void afficherGrilleVide() {
         afficherGrille(new SudokuModelSamourail());
     }
 
-    public void afficherGrille() {
-        afficherGrille(model);
-        if(message != null){
-            System.out.println(message);
-            message = null;
-        }
-    }
-
-    private String message;
-    @Override
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void afficherGrille(SudokuModelSamourail values) {
-        Character[] vect = new Character[21 * 21 - 4 * 3 * 6];
-        int pos=0;
-        for (int lig = 0; lig < 21; lig++) {
-            for (int col = 0; col < 21; col++) {
-                if (values.isPositionValid(lig, col)) {
-                    try {
-                        if (values.getValue(lig, col) == SudokuModel.EMPTY) {
-                            vect[pos++] = '.';
-                        } else {
-                            vect[pos++] = values.getValue(lig, col);
-                        }
-                    } catch (SudokuPositionException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
-        afficherVecteur(vect);
-    }
-
-    private static void afficherVecteur(Character[] vect) {
-        System.out.printf(format, (Object[]) vect);
-    }
 }

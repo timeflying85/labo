@@ -20,22 +20,17 @@ public class Main {
         if(controleur != null) {
             controleur.sart();
         }
-
     }
-
     private static SudokuControleur getCreateSudokuControleur(SudokuModel9x9 sudoku) {
         Vue9x9 vue = new Vue9x9(sudoku);
-        return new CreateSudokuControleur(sudoku,vue);
+        return new CreateSudokuControleur(sudoku,vue,input);
     }
-
     private static SudokuControleur getCreateSudokuControleur(SudokuModel4x4 sudoku) {
         Vue4x4 vue = new Vue4x4(sudoku);
-        return new CreateSudokuControleur(sudoku,vue);
+        return new CreateSudokuControleur(sudoku,vue,input);
     }
-
     private static SudokuControleur getCreateSudokuControleur(SudokuModelSamourail sudoku) {
         VueSamourail vue = new VueSamourail(sudoku);
-        return new CreateSudokuControleur(sudoku,vue);
+        return new CreateSudokuControleur(sudoku,vue,input);
     }
-
 }

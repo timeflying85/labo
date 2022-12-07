@@ -13,4 +13,8 @@ public interface SudokuModel {
     boolean isValueValid(char value);
 
     boolean isPositionValid(int lig, int col);
+
+    int getNbvalues();
+
+    int getMaxSize();
 }

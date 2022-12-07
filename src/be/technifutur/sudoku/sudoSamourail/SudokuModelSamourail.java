@@ -1,41 +1,14 @@
 package be.technifutur.sudoku.sudoSamourail;
 
+import be.technifutur.sudoku.AbstractSudokuModel;
 import be.technifutur.sudoku.SudokuModel;
 import be.technifutur.sudoku.SudokuPositionException;
 import be.technifutur.sudoku.SudokuValueException;
 
-public class SudokuModelSamourail implements SudokuModel {
-    private char[][] grille = new char[21][21];
+public class SudokuModelSamourail extends AbstractSudokuModel implements SudokuModel {
 
-    @Override
-    public char getValue(int lig, int col) throws SudokuPositionException {
-        testPosition(lig, col);
-        return this.grille[lig][col];
-    }
-
-    private void testPosition(int lig, int col) throws SudokuPositionException {
-        if (!isPositionValid(lig, col)) {
-            throw new SudokuPositionException(String.format("la position %s, %s n'est pas valide", lig, col));
-        }
-    }
-
-    @Override
-    public void setValue(int lig, int col, char value) throws SudokuPositionException, SudokuValueException {
-        testPosition(lig, col);
-        testValue(value);
-        this.grille[lig][col] = value;
-    }
-
-    private void testValue(char value) throws SudokuValueException {
-        if (!isValueValid(value)) {
-            throw new SudokuValueException(String.format("la valeur %s n'est pas valide", value));
-        }
-    }
-
-    @Override
-    public void deleteValue(int lig, int col) throws SudokuPositionException {
-        testPosition(lig, col);
-        grille[lig][col] = SudokuModel.EMPTY;
+    public SudokuModelSamourail() {
+        super(21);
     }
 
     @Override
@@ -50,6 +23,11 @@ public class SudokuModelSamourail implements SudokuModel {
                 isPositionInSudoku(lig, col, 6, 6) ||
                 isPositionInSudoku(lig, col, 9 + 3, 0) ||
                 isPositionInSudoku(lig, col, 9 + 3, 9 + 3);
+    }
+
+    @Override
+    public int getNbvalues() {
+        return 21*21 - 4* 3 * 6;
     }
 
     private boolean isPositionInSudoku(int lig, int col, int lig0, int col0) {
